@@ -1,6 +1,11 @@
 from setuptools import setup, find_packages
-import os
 import shop
+try:
+    from pypandoc import convert
+except ImportError:
+    def convert(filename, fmt):
+        with open(filename) as fd:
+            return fd.read()
 
 CLASSIFIERS = [
     'Environment :: Web Environment',
@@ -14,24 +19,30 @@ CLASSIFIERS = [
 ]
 
 setup(
-    author="Christopher Glass",
-    author_email="tribaal@gmail.com",
-    name='django-shop',
+    author="Jacob Rief",
+    author_email="jacob.rief@gmail.com",
+    name="django-shop",
     version=shop.__version__,
-    description='An Advanced Django Shop',
-    long_description=open(os.path.join(os.path.dirname(__file__), 'README.rst')).read(),
+    description="A RESTful Django Shop",
+    long_description=convert('README.md', 'rst'),
     url='http://www.django-shop.org/',
     license='BSD License',
     platforms=['OS Independent'],
     classifiers=CLASSIFIERS,
-    install_requires=[
-        'Django>=1.4',
-        'django-classy-tags>=0.3.3',
-        'django-polymorphic>=0.2',
-        'south>=0.7.2',
-        'jsonfield>=0.9.6'
-    ],
-    packages=find_packages(exclude=["example", "example.*"]),
+    packages=find_packages(exclude=['example', 'docs', 'tests']),
     include_package_data=True,
     zip_safe=False,
+    install_requires=[
+        'Django>=1.8,<1.9',
+        'beautifulsoup4>=4.4.0',
+        'django-cms>=3.2.0',
+        'django-post-office>=2.0.5',
+        'django-filer>=1.0.6',
+        'django-ipware>=1.1.1',
+        'django-fsm>=2.2.1',
+        'djangorestframework>=3.1.3',
+        'django-angular>=0.7.15',
+        'django-select2>=5.5.0',
+        'django-sass-processor>=0.3.4',
+    ],
 )
